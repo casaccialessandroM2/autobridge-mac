@@ -1,0 +1,22 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(npm run *)",
+      "Bash(pip3 install *)",
+      "Read(//private/tmp/**)",
+      "Bash(mkdir -p /Users/theottico/Downloads/autobridge-win/src-tauri/src \\\\ *)",
+      "Bash(python3)",
+      "Bash(npm install *)",
+      "Bash(brew install *)",
+      "Bash(gh auth *)",
+      "Bash(git rm *)",
+      "Bash(git add *)",
+      "Bash(git commit *)",
+      "Bash(gh repo *)",
+      "Bash(git filter-branch *)",
+      "Bash(git push *)",
+      "Bash(gh run *)",
+      "Bash(gh workflow *)"
+    ]
+  }
+}

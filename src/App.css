@@ -1,0 +1,263 @@
+/* ── Design tokens ────────────────────────────────────────────────────────── */
+:root {
+  --bg0: #080812;
+  --bg1: #0f0f1e;
+  --bg2: #161628;
+  --bg3: #1e1e35;
+  --border: #252545;
+  --border-hi: #353560;
+
+  --text: #dde0f0;
+  --text2: #8080a8;
+  --text3: #404065;
+
+  --accent:   #00c8ff;
+  --accent-g: rgba(0, 200, 255, 0.18);
+  --success:  #00e87a;
+  --success-g:rgba(0, 232, 122, 0.15);
+  --warn:     #ffaa00;
+  --error:    #ff4060;
+  --error-g:  rgba(255, 64, 96, 0.15);
+  --doip:     #b060ff;
+
+  --radius: 7px;
+  font-family: -apple-system, "SF Pro Text", "Helvetica Neue", sans-serif;
+  font-size: 13px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+}
+
+/* ── Reset ────────────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body { background: var(--bg0); color: var(--text); overflow: hidden; user-select: none; }
+
+/* ── App shell ────────────────────────────────────────────────────────────── */
+.app { display: flex; flex-direction: column; height: 100vh; }
+
+/* ── Header ───────────────────────────────────────────────────────────────── */
+.header {
+  display: flex; align-items: center; justify-content: space-between;
+  height: 46px; padding: 0 18px;
+  background: var(--bg1);
+  border-bottom: 1px solid var(--border);
+  -webkit-app-region: drag;
+  padding-left: 80px; /* leave room for macOS traffic lights */
+}
+.header * { -webkit-app-region: no-drag; }
+.header-left { display: flex; align-items: center; gap: 10px; }
+
+.logo-icon { font-size: 16px; color: var(--accent); font-weight: 700; }
+.logo-text  { font-size: 15px; font-weight: 700; letter-spacing: -0.4px; }
+.accent     { color: var(--accent); }
+
+.badge {
+  font-size: 10px; font-weight: 600; letter-spacing: 0.4px;
+  padding: 2px 7px; border-radius: 4px;
+  background: var(--bg3); border: 1px solid var(--border);
+  color: var(--text2);
+}
+.badge-protocol { color: var(--accent); border-color: rgba(0,200,255,0.3); }
+
+/* ── Status pill ──────────────────────────────────────────────────────────── */
+.status-pill {
+  display: flex; align-items: center; gap: 6px;
+  font-size: 12px; font-weight: 600; padding: 4px 12px;
+  border-radius: 20px; border: 1px solid var(--border);
+  background: var(--bg2);
+}
+.status-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--text3); }
+.status-disconnected .status-dot { background: var(--text3); }
+.status-disconnected { color: var(--text2); }
+.status-connecting .status-dot { background: var(--warn); animation: blink 0.9s ease-in-out infinite; }
+.status-connecting { color: var(--warn); border-color: rgba(255,170,0,.35); }
+.status-connected .status-dot { background: var(--success); box-shadow: 0 0 6px var(--success); }
+.status-connected { color: var(--success); border-color: rgba(0,232,122,.3); }
+.status-error .status-dot { background: var(--error); }
+.status-error { color: var(--error); border-color: var(--error-g); }
+
+@keyframes blink { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+/* ── Layout ───────────────────────────────────────────────────────────────── */
+.layout { display: flex; flex: 1; overflow: hidden; }
+
+/* ── Sidebar ──────────────────────────────────────────────────────────────── */
+.sidebar {
+  width: 272px; min-width: 272px;
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  padding: 14px 14px 12px;
+  display: flex; flex-direction: column; gap: 10px;
+  overflow-y: auto;
+}
+
+.section-label {
+  font-size: 9.5px; font-weight: 700; letter-spacing: 1.3px;
+  text-transform: uppercase; color: var(--text3);
+  margin-bottom: 2px;
+}
+
+/* ── Form ─────────────────────────────────────────────────────────────────── */
+.field { display: flex; flex-direction: column; gap: 4px; }
+.field-row { display: flex; gap: 8px; }
+.field-row .field { flex: 1; min-width: 0; }
+
+label { font-size: 10.5px; font-weight: 600; color: var(--text2); letter-spacing: 0.2px; }
+
+input, select {
+  background: var(--bg0);
+  border: 1px solid var(--border);
+  color: var(--text);
+  padding: 6px 9px;
+  border-radius: var(--radius);
+  font-size: 13px; font-family: inherit;
+  outline: none; width: 100%;
+  transition: border-color .15s, box-shadow .15s;
+}
+input:focus, select:focus {
+  border-color: var(--accent);
+  box-shadow: 0 0 0 2px var(--accent-g);
+}
+input:disabled, select:disabled { opacity: 0.4; cursor: not-allowed; }
+
+select {
+  appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='10' height='6'%3E%3Cpath d='M5 6 0 0h10z' fill='%23505080'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 9px center;
+  padding-right: 26px; cursor: pointer;
+}
+select option { background: var(--bg2); }
+
+.divider { height: 1px; background: var(--border); margin: 2px 0; }
+.spacer  { flex: 1; min-height: 8px; }
+
+/* ── Error box ────────────────────────────────────────────────────────────── */
+.error-box {
+  font-size: 11px; color: var(--error);
+  background: var(--error-g);
+  border: 1px solid rgba(255,64,96,.25);
+  border-radius: var(--radius); padding: 7px 10px;
+  word-break: break-word;
+}
+
+/* ── Tunnel badge ─────────────────────────────────────────────────────────── */
+.tunnel-badge {
+  display: flex; align-items: center; gap: 7px;
+  font-size: 11px; font-weight: 600;
+  font-family: "SF Mono", "Fira Code", monospace;
+  color: var(--success);
+  background: var(--success-g);
+  border: 1px solid rgba(0,232,122,.22);
+  border-radius: var(--radius); padding: 6px 10px;
+}
+.tunnel-dot {
+  width: 6px; height: 6px; border-radius: 50%;
+  background: var(--success); box-shadow: 0 0 5px var(--success);
+}
+
+/* ── Connect button ───────────────────────────────────────────────────────── */
+.btn-connect {
+  width: 100%; padding: 9px 12px;
+  border-radius: var(--radius); border: none;
+  font-size: 13px; font-weight: 700; font-family: inherit;
+  cursor: pointer; letter-spacing: 0.2px;
+  display: flex; align-items: center; justify-content: center; gap: 7px;
+  background: var(--accent); color: #040412;
+  transition: opacity .15s, box-shadow .15s;
+}
+.btn-connect:hover:not(:disabled) {
+  opacity: .9;
+  box-shadow: 0 0 18px var(--accent-g);
+}
+.btn-connect:disabled { opacity: .35; cursor: not-allowed; }
+
+.btn-disconnect {
+  background: transparent;
+  color: var(--error);
+  border: 1px solid rgba(255,64,96,.45);
+}
+.btn-disconnect:hover:not(:disabled) { background: var(--error-g); }
+
+/* Spinner */
+.spinner {
+  display: inline-block; width: 11px; height: 11px;
+  border: 2px solid transparent;
+  border-top-color: currentColor;
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── Log panel ────────────────────────────────────────────────────────────── */
+.log-panel {
+  flex: 1; display: flex; flex-direction: column;
+  background: var(--bg0); overflow: hidden;
+}
+.log-toolbar {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 9px 14px;
+  background: var(--bg1);
+  border-bottom: 1px solid var(--border);
+}
+.log-toolbar-right { display: flex; align-items: center; gap: 10px; }
+.log-count { font-size: 11px; color: var(--text3); }
+
+.btn-clear {
+  background: transparent; border: 1px solid var(--border);
+  color: var(--text2); padding: 3px 10px;
+  border-radius: 5px; font-size: 11px; cursor: pointer;
+  font-family: inherit; transition: border-color .12s, color .12s;
+}
+.btn-clear:hover { border-color: var(--text2); color: var(--text); }
+
+.log-body {
+  flex: 1; overflow-y: auto; padding: 6px 4px;
+  font-family: "SF Mono", "Fira Code", "Cascadia Code", "JetBrains Mono", monospace;
+  font-size: 11.5px;
+}
+
+.log-empty {
+  display: flex; flex-direction: column; align-items: center;
+  justify-content: center; height: 100%;
+  gap: 10px; color: var(--text3); font-size: 12px;
+}
+.log-empty-icon { font-size: 28px; }
+
+.log-row {
+  display: flex; gap: 8px; align-items: baseline;
+  padding: 1.5px 10px; border-radius: 4px;
+  transition: background .08s;
+}
+.log-row:hover { background: rgba(255,255,255,.028); }
+
+.log-ts { color: var(--text3); min-width: 88px; font-size: 10.5px; }
+
+.log-lvl {
+  min-width: 46px; font-size: 9.5px; font-weight: 700;
+  letter-spacing: .5px; text-transform: uppercase;
+}
+.lvl-info  { color: var(--accent); }
+.lvl-warn  { color: var(--warn); }
+.lvl-error { color: var(--error); }
+.lvl-debug { color: var(--text3); }
+.lvl-doip  { color: var(--doip); }
+
+.log-msg { color: var(--text); flex: 1; word-break: break-word; }
+.log-error .log-msg { color: var(--error); }
+.log-warn  .log-msg { color: var(--warn); }
+.log-doip  .log-msg { color: rgba(176,96,255,.9); }
+
+/* ── Footer ───────────────────────────────────────────────────────────────── */
+.footer {
+  display: flex; align-items: center; gap: 8px;
+  padding: 5px 14px;
+  background: var(--bg1); border-top: 1px solid var(--border);
+  font-size: 10.5px; color: var(--text3);
+}
+.footer-sep { color: var(--border-hi); }
+
+/* ── Scrollbar ────────────────────────────────────────────────────────────── */
+::-webkit-scrollbar { width: 5px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--border-hi); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #4a4a70; }
