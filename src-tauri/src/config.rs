@@ -30,6 +30,10 @@ pub struct AppConfig {
     pub doip_source_address: u16,
     /// DoIP target (ECU) logical address      (default: 0x0001)
     pub doip_target_address: u16,
+    /// Relay server URL (impostato via Advanced Settings o env RELAY_URL)
+    pub relay_url: String,
+    /// Debug mode — abilita log verbose
+    pub debug_mode: bool,
 }
 
 impl Default for AppConfig {
@@ -42,6 +46,9 @@ impl Default for AppConfig {
             local_ws_port:       8765,
             doip_source_address: 0x0E00,
             doip_target_address: 0x0001,
+            relay_url:           std::env::var("RELAY_URL")
+                                    .unwrap_or_else(|_| "wss://autobridge-relay-production.up.railway.app".to_string()),
+            debug_mode:          false,
         }
     }
 }
