@@ -734,7 +734,7 @@ export default function App() {
                 Test in corso (10 ping)...
               </>
             ) : (
-              <>◎ Test Connessione Relay</>
+              <>◎ Test Connessione</>
             )}
           </button>
 
