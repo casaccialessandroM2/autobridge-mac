@@ -768,6 +768,31 @@ export default function App() {
             </div>
           )}
 
+          {/* Avviso sessione attiva */}
+          {isConnected && (
+            <div style={{
+              border: "2px solid #ffaa00",
+              borderRadius: "10px",
+              padding: "10px 14px",
+              background: "rgba(255,170,0,0.08)",
+              display: "flex",
+              alignItems: "center",
+              gap: "10px",
+            }}>
+              <span style={{ fontSize: "18px", flexShrink: 0 }}>⚠</span>
+              <span style={{
+                fontSize: "11px",
+                fontWeight: 800,
+                color: "#ffaa00",
+                letterSpacing: "0.6px",
+                lineHeight: "1.4",
+                textTransform: "uppercase",
+              }}>
+                Non chiudere questa finestra durante la sessione di controllo
+              </span>
+            </div>
+          )}
+
           {/* Log */}
           <div style={styles.logBox} ref={logRef}>
             {visibleLogs.length === 0 ? (
