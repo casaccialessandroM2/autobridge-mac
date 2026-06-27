@@ -87,83 +87,42 @@ function logLevelColor(level: string): string {
   return "#8899aa";
 }
 
-// ── BMW M stripe corner decoration ────────────────────────────────────────────
-// Tre strisce parallele oblique (angolo 35°) nell'angolo superiore destro.
-// Larghezza striscia = 18px, gap = 4px, clip sul triangolo d'angolo.
-function MStripes() {
-  const W = 130, H = 130;
-  // Le strisce scorrono da in alto a sinistra verso in basso a destra, angolo ~35°.
-  // Genero parallelogrammi: ogni striscia è una banda diagonale.
-  // sin(35°)≈0.574, cos(35°)≈0.819
-  // Offset centrati sull'angolo in alto a destra (W, 0).
-  const angle = 35 * Math.PI / 180;
-  const sw = 22;   // larghezza striscia
-  const gap = 5;   // gap tra strisce
-  const step = sw + gap;
-  const colors = ["#1C69D4", "#6E2585", "#C0272D"];
-
-  // Per ogni striscia genero un parallelogramma esteso beyond i bordi del clip.
-  // Le bande scorrono ortogonali alla direzione (sin a, -cos a) = (0.574, -0.819).
-  // Punto di partenza sull'asse perpendicolare dal corner (W,0).
-  // offset dal corner: 0, step, 2*step
-  const dx = Math.cos(angle);  // 0.819
-  const dy = Math.sin(angle);  // 0.574
-  const px = -dy;              // perp: -0.574
-  const py = dx;               //        0.819
-
-  const stripes = colors.map((color, i) => {
-    const o0 = i * step;
-    const o1 = o0 + sw;
-    // 4 angoli del parallelogramma, esteso ampiamente
-    const L = 200;
-    const a = [W + px * o0 - dx * L, 0 + py * o0 - dy * L];
-    const b = [W + px * o1 - dx * L, 0 + py * o1 - dy * L];
-    const c = [W + px * o1 + dx * L, 0 + py * o1 + dy * L];
-    const d = [W + px * o0 + dx * L, 0 + py * o0 + dy * L];
-    return (
-      <polygon
-        key={color}
-        points={[a, b, c, d].map(p => p.join(",")).join(" ")}
-        fill={color}
-      />
-    );
-  });
-
-  return (
-    <svg
-      width={W} height={H}
-      viewBox={`0 0 ${W} ${H}`}
-      style={{ position: "absolute", top: 0, right: 0, pointerEvents: "none", borderRadius: "0 20px 0 0", overflow: "hidden" }}
-    >
-      {/* Clip triangolare: solo l'angolo in alto a destra */}
-      <clipPath id="m-corner">
-        <polygon points={`${W},0 ${W},${H} 0,0`} />
-      </clipPath>
-      <g clipPath="url(#m-corner)" opacity="0.92">
-        {stripes}
-      </g>
-      {/* Bordo interno sottile */}
-      <polygon
-        points={`${W},0 ${W},${H} 0,0`}
-        fill="none"
-        stroke="#ffffff0a"
-        strokeWidth="1"
-      />
-    </svg>
-  );
-}
+// Le strisce BMW M coprono tutto lo sfondo (stile wallpaper ufficiale).
+// Tre bande parallele oblique a ~35°, larghezza uguale, che si ripetono.
+// Sotto l'UI c'è un overlay scuro semi-trasparente per la leggibilità.
 
 // ── Styles (inline) ────────────────────────────────────────────────────────────
 const styles: Record<string, React.CSSProperties> = {
   root: {
     height: "100vh",
-    background: "linear-gradient(160deg, #0a0e17 0%, #0d1117 60%, #0a1020 100%)",
+    // Sfondo: strisce BMW M parallele oblique a ~35° (come wallpaper ufficiale)
+    // repeating-linear-gradient: blu | viola | rosso, tre bande uguali
+    background: `
+      repeating-linear-gradient(
+        -35deg,
+        #1C69D4 0px,
+        #1C69D4 33.3%,
+        #6E2585 33.3%,
+        #6E2585 66.6%,
+        #C0272D 66.6%,
+        #C0272D 100%
+      )
+    `,
+    backgroundSize: "520px 520px",
     color: "#e6edf3",
     fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif",
     display: "flex",
     flexDirection: "column",
     boxSizing: "border-box",
     overflow: "hidden",
+    position: "relative" as const,
+  },
+  // Overlay scuro sopra le strisce — lascia intravedere i colori M
+  bgOverlay: {
+    position: "absolute" as const,
+    inset: 0,
+    background: "rgba(8, 11, 20, 0.82)",
+    zIndex: 0,
   },
   card: {
     flex: 1,
@@ -171,6 +130,7 @@ const styles: Record<string, React.CSSProperties> = {
     flexDirection: "column",
     gap: "13px",
     position: "relative" as const,
+    zIndex: 1,
     padding: "22px 22px 18px",
     overflow: "hidden",
   },
@@ -233,7 +193,7 @@ const styles: Record<string, React.CSSProperties> = {
     margin: "2px 0",
   },
   vinPanel: {
-    background: "linear-gradient(135deg, #0f1520 0%, #131c2b 100%)",
+    background: "linear-gradient(135deg, rgba(15,21,32,0.90) 0%, rgba(19,28,43,0.90) 100%)",
     borderRadius: "14px",
     padding: "18px 22px",
     display: "flex",
@@ -290,7 +250,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   statusCard: {
     flex: 1,
-    background: "#0d1117",
+    background: "rgba(10,13,20,0.88)",
     border: "1px solid #1e2535",
     borderRadius: "12px",
     padding: "12px 14px",
@@ -339,7 +299,7 @@ const styles: Record<string, React.CSSProperties> = {
     textTransform: "uppercase" as const,
   },
   qualityBar: {
-    background: "#0d1117",
+    background: "rgba(10,13,20,0.88)",
     border: "1px solid #1e2535",
     borderRadius: "12px",
     padding: "12px 18px",
@@ -367,7 +327,7 @@ const styles: Record<string, React.CSSProperties> = {
     fontFamily: "monospace",
   },
   logBox: {
-    background: "#0a0d12",
+    background: "rgba(7,9,14,0.90)",
     border: "1px solid #1e2535",
     borderRadius: "12px",
     padding: "10px 14px",
@@ -693,10 +653,9 @@ export default function App() {
         button:hover { opacity: 0.88; }
       `}</style>
 
-      <div style={{ ...styles.root, ...styles.card }}>
-
-          {/* BMW M corner stripes */}
-          <MStripes />
+      <div style={styles.root}>
+      <div style={styles.bgOverlay} />
+      <div style={styles.card}>
 
           {/* Header */}
           <div style={styles.header}>
@@ -933,6 +892,7 @@ export default function App() {
             </div>
           )}
 
+      </div>
       </div>
 
       {/* Advanced Overlay */}
