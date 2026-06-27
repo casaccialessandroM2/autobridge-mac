@@ -87,11 +87,36 @@ function logLevelColor(level: string): string {
   return "#8899aa";
 }
 
+// ── BMW M stripe corner decoration ────────────────────────────────────────────
+function MStripes() {
+  return (
+    <svg
+      width="110" height="110"
+      viewBox="0 0 110 110"
+      style={{ position: "absolute", top: 0, right: 0, pointerEvents: "none", borderRadius: "0 20px 0 0" }}
+    >
+      <clipPath id="corner-clip">
+        <path d="M110 0 L110 110 L0 0 Z" />
+      </clipPath>
+      <g clipPath="url(#corner-clip)">
+        {/* Blu BMW M */}
+        <rect x="0" y="0" width="110" height="110" fill="#1C69D4" />
+        {/* Viola BMW M */}
+        <polygon points="110,0 110,110 36,0" fill="#6E2585" />
+        {/* Rosso BMW M */}
+        <polygon points="110,0 110,110 68,0" fill="#C0272D" />
+      </g>
+      {/* Bordo sottile per staccarsi dal bg */}
+      <path d="M110 0 L0 0 L110 110" fill="none" stroke="#ffffff08" strokeWidth="1" />
+    </svg>
+  );
+}
+
 // ── Styles (inline) ────────────────────────────────────────────────────────────
 const styles: Record<string, React.CSSProperties> = {
   root: {
     minHeight: "100vh",
-    background: "#0d1117",
+    background: "linear-gradient(160deg, #0a0e17 0%, #0d1117 60%, #0a1020 100%)",
     color: "#e6edf3",
     fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif",
     display: "flex",
@@ -103,103 +128,148 @@ const styles: Record<string, React.CSSProperties> = {
   },
   card: {
     width: "100%",
-    maxWidth: "420px",
+    maxWidth: "440px",
     display: "flex",
     flexDirection: "column",
-    gap: "20px",
+    gap: "14px",
+    position: "relative" as const,
+    background: "linear-gradient(180deg, #13182200 0%, #131822 100%)",
+    borderRadius: "20px",
+    border: "1px solid #1e2535",
+    padding: "24px 24px 20px",
+    boxShadow: "0 24px 80px #00000060, 0 0 0 0.5px #ffffff08 inset",
+    overflow: "hidden",
   },
   header: {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
+    marginBottom: "4px",
   },
   logoRow: {
     display: "flex",
     alignItems: "center",
     gap: "10px",
   },
+  logoMark: {
+    width: "32px",
+    height: "32px",
+    borderRadius: "8px",
+    background: "linear-gradient(135deg, #1C69D4, #6E2585)",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    fontSize: "14px",
+    fontWeight: 800,
+    color: "#fff",
+    letterSpacing: "-0.5px",
+    flexShrink: 0,
+  },
   logoText: {
-    fontSize: "22px",
+    fontSize: "20px",
     fontWeight: 700,
     letterSpacing: "-0.5px",
     color: "#e6edf3",
   },
   badge: {
-    fontSize: "10px",
-    fontWeight: 600,
-    letterSpacing: "0.5px",
-    color: "#00c8ff",
-    border: "1px solid #00c8ff44",
-    borderRadius: "6px",
+    fontSize: "9px",
+    fontWeight: 700,
+    letterSpacing: "0.8px",
+    color: "#1C69D4",
+    border: "1px solid #1C69D433",
+    borderRadius: "5px",
     padding: "2px 7px",
-    background: "#00c8ff0d",
+    background: "#1C69D410",
+    textTransform: "uppercase" as const,
   },
   gearBtn: {
     background: "none",
-    border: "none",
-    color: "#8899aa",
-    fontSize: "20px",
+    border: "1px solid #1e2535",
+    color: "#566375",
+    fontSize: "16px",
     cursor: "pointer",
-    padding: "4px 6px",
-    borderRadius: "8px",
-    transition: "color 0.2s, background 0.2s",
+    padding: "6px 8px",
+    borderRadius: "10px",
+    transition: "color 0.2s, border-color 0.2s, background 0.2s",
+    lineHeight: 1,
+  },
+  divider: {
+    height: "1px",
+    background: "linear-gradient(90deg, transparent, #1e2535 30%, #1e2535 70%, transparent)",
+    margin: "2px 0",
   },
   vinPanel: {
-    background: "#161b22",
-    borderRadius: "16px",
-    padding: "20px 24px",
+    background: "linear-gradient(135deg, #0f1520 0%, #131c2b 100%)",
+    borderRadius: "14px",
+    padding: "18px 22px",
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    gap: "6px",
-    border: "1px solid #21262d",
+    gap: "5px",
+    border: "1px solid #1C69D420",
+    boxShadow: "0 0 0 1px #1C69D408 inset",
+    position: "relative" as const,
+    overflow: "hidden",
+  },
+  vinGlow: {
+    position: "absolute" as const,
+    top: "-40px",
+    left: "50%",
+    transform: "translateX(-50%)",
+    width: "200px",
+    height: "100px",
+    background: "radial-gradient(ellipse, #1C69D418 0%, transparent 70%)",
+    pointerEvents: "none",
   },
   vinLabel: {
-    fontSize: "10px",
-    fontWeight: 600,
-    letterSpacing: "1.5px",
-    color: "#8899aa",
+    fontSize: "9px",
+    fontWeight: 700,
+    letterSpacing: "2px",
+    color: "#566375",
     textTransform: "uppercase" as const,
   },
   vinText: {
-    fontSize: "17px",
+    fontSize: "16px",
     fontWeight: 600,
-    letterSpacing: "2px",
+    letterSpacing: "3px",
     fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace",
     color: "#e6edf3",
+    textShadow: "0 0 20px #1C69D440",
   },
   vinShimmer: {
-    fontSize: "17px",
+    fontSize: "16px",
     fontWeight: 600,
-    letterSpacing: "2px",
+    letterSpacing: "3px",
     fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace",
-    color: "#8899aa",
+    color: "#566375",
     animation: "shimmer 1.5s ease-in-out infinite",
   },
   vinBrand: {
-    fontSize: "12px",
-    color: "#8899aa",
-    marginTop: "2px",
+    fontSize: "11px",
+    color: "#566375",
+    marginTop: "1px",
+    letterSpacing: "1px",
   },
   statusRow: {
     display: "flex",
-    gap: "12px",
+    gap: "10px",
   },
   statusCard: {
     flex: 1,
-    background: "#161b22",
-    border: "1px solid #21262d",
+    background: "#0d1117",
+    border: "1px solid #1e2535",
     borderRadius: "12px",
-    padding: "14px 16px",
+    padding: "12px 14px",
     display: "flex",
     flexDirection: "column",
-    gap: "6px",
+    gap: "7px",
+    transition: "border-color 0.3s",
   },
   statusCardLabel: {
-    fontSize: "10px",
-    fontWeight: 600,
-    letterSpacing: "1.2px",
-    color: "#8899aa",
+    fontSize: "9px",
+    fontWeight: 700,
+    letterSpacing: "1.5px",
+    color: "#3d4a5a",
     textTransform: "uppercase" as const,
   },
   statusIndicatorRow: {
@@ -208,40 +278,40 @@ const styles: Record<string, React.CSSProperties> = {
     gap: "8px",
   },
   dot: {
-    width: "8px",
-    height: "8px",
+    width: "7px",
+    height: "7px",
     borderRadius: "50%",
     flexShrink: 0,
   },
   statusText: {
-    fontSize: "13px",
+    fontSize: "12px",
     fontWeight: 500,
-    color: "#e6edf3",
+    color: "#c9d1d9",
   },
   connectBtn: {
     width: "100%",
-    minWidth: "200px",
-    height: "56px",
-    borderRadius: "28px",
+    height: "54px",
+    borderRadius: "27px",
     border: "none",
-    fontSize: "16px",
+    fontSize: "15px",
     fontWeight: 700,
-    letterSpacing: "0.5px",
+    letterSpacing: "0.8px",
     cursor: "pointer",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
     gap: "10px",
-    transition: "background 0.25s, transform 0.1s",
+    transition: "opacity 0.2s, transform 0.1s, box-shadow 0.2s",
+    textTransform: "uppercase" as const,
   },
   qualityBar: {
-    background: "#161b22",
-    border: "1px solid #21262d",
+    background: "#0d1117",
+    border: "1px solid #1e2535",
     borderRadius: "12px",
-    padding: "14px 20px",
+    padding: "12px 18px",
     display: "grid",
     gridTemplateColumns: "1fr 1fr 1fr 1fr",
-    gap: "8px",
+    gap: "6px",
   },
   qualityItem: {
     display: "flex",
@@ -250,48 +320,49 @@ const styles: Record<string, React.CSSProperties> = {
     gap: "4px",
   },
   qualityItemLabel: {
-    fontSize: "9px",
-    fontWeight: 600,
-    letterSpacing: "0.8px",
-    color: "#8899aa",
+    fontSize: "8px",
+    fontWeight: 700,
+    letterSpacing: "0.5px",
+    color: "#3d4a5a",
     textTransform: "uppercase" as const,
   },
   qualityItemValue: {
-    fontSize: "14px",
-    fontWeight: 600,
+    fontSize: "13px",
+    fontWeight: 700,
     color: "#e6edf3",
+    fontFamily: "monospace",
   },
   logBox: {
-    background: "#0d1117",
-    border: "1px solid #21262d",
+    background: "#0a0d12",
+    border: "1px solid #1e2535",
     borderRadius: "12px",
-    padding: "12px 16px",
-    maxHeight: "160px",
+    padding: "10px 14px",
+    maxHeight: "140px",
     overflowY: "auto" as const,
     display: "flex",
     flexDirection: "column",
-    gap: "4px",
+    gap: "3px",
   },
   logLine: {
     display: "flex",
     gap: "8px",
-    fontSize: "11px",
-    lineHeight: "1.5",
+    fontSize: "10px",
+    lineHeight: "1.6",
     fontFamily: "'JetBrains Mono', 'Fira Code', monospace",
   },
   logTs: {
-    color: "#484f58",
+    color: "#2d3748",
     flexShrink: 0,
   },
   logMsg: {
-    color: "#8899aa",
+    color: "#566375",
     wordBreak: "break-all" as const,
   },
   overlay: {
     position: "fixed" as const,
     inset: 0,
-    background: "#0d1117ee",
-    backdropFilter: "blur(8px)",
+    background: "#060810cc",
+    backdropFilter: "blur(12px)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -299,8 +370,8 @@ const styles: Record<string, React.CSSProperties> = {
     padding: "16px",
   },
   advPanel: {
-    background: "#161b22",
-    border: "1px solid #30363d",
+    background: "#0f1520",
+    border: "1px solid #1e2535",
     borderRadius: "20px",
     padding: "28px 28px 24px",
     width: "100%",
@@ -310,6 +381,7 @@ const styles: Record<string, React.CSSProperties> = {
     display: "flex",
     flexDirection: "column",
     gap: "18px",
+    boxShadow: "0 32px 100px #00000080",
   },
   advHeader: {
     display: "flex",
@@ -324,11 +396,11 @@ const styles: Record<string, React.CSSProperties> = {
   },
   closeBtn: {
     background: "none",
-    border: "none",
-    color: "#8899aa",
-    fontSize: "22px",
+    border: "1px solid #1e2535",
+    color: "#566375",
+    fontSize: "18px",
     cursor: "pointer",
-    padding: "2px 6px",
+    padding: "3px 8px",
     borderRadius: "8px",
     lineHeight: 1,
   },
@@ -338,15 +410,15 @@ const styles: Record<string, React.CSSProperties> = {
     gap: "6px",
   },
   fieldLabel: {
-    fontSize: "11px",
-    fontWeight: 600,
+    fontSize: "10px",
+    fontWeight: 700,
     letterSpacing: "0.8px",
-    color: "#8899aa",
+    color: "#566375",
     textTransform: "uppercase" as const,
   },
   input: {
-    background: "#0d1117",
-    border: "1px solid #30363d",
+    background: "#080c14",
+    border: "1px solid #1e2535",
     borderRadius: "10px",
     padding: "10px 14px",
     color: "#e6edf3",
@@ -364,7 +436,7 @@ const styles: Record<string, React.CSSProperties> = {
   },
   toggleLabel: {
     fontSize: "14px",
-    color: "#e6edf3",
+    color: "#c9d1d9",
     fontWeight: 500,
   },
   saveBtn: {
@@ -372,21 +444,22 @@ const styles: Record<string, React.CSSProperties> = {
     height: "44px",
     borderRadius: "22px",
     border: "none",
-    background: "#00c8ff",
-    color: "#0d1117",
+    background: "linear-gradient(135deg, #1C69D4, #6E2585)",
+    color: "#fff",
     fontSize: "14px",
     fontWeight: 700,
     cursor: "pointer",
     transition: "opacity 0.2s",
     marginTop: "4px",
+    letterSpacing: "0.5px",
   },
   exportBtn: {
     width: "100%",
     height: "40px",
     borderRadius: "10px",
-    border: "1px solid #30363d",
+    border: "1px solid #1e2535",
     background: "none",
-    color: "#8899aa",
+    color: "#566375",
     fontSize: "13px",
     fontWeight: 600,
     cursor: "pointer",
@@ -554,8 +627,18 @@ export default function App() {
     }
   }
 
-  const connectBtnBg = isConnected ? "#ff4060" : "#00c8ff";
+  const connectBtnBg = isConnected
+    ? "#C0272D"
+    : isConnecting
+    ? "linear-gradient(135deg, #0f1a2e, #1a1030)"
+    : "linear-gradient(135deg, #1C69D4 0%, #6E2585 55%, #C0272D 100%)";
+  const connectBtnColor = isConnecting ? "#566375" : "#fff";
   const connectBtnText = isConnected ? "DISCONNETTI" : isConnecting ? "CONNESSIONE..." : "CONNETTI";
+  const connectBtnShadow = isConnected
+    ? "0 8px 24px #C0272D33"
+    : isConnecting
+    ? "none"
+    : "0 8px 32px #1C69D440, 0 2px 8px #6E258530";
 
   const visibleLogs = logs.slice(-8);
 
@@ -563,21 +646,28 @@ export default function App() {
     <>
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 #00c8ff44; } 50% { box-shadow: 0 0 0 12px #00c8ff00; } }
-        @keyframes shimmer { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
+        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 #1C69D444, 0 8px 32px #1C69D420; } 50% { box-shadow: 0 0 0 14px #1C69D400, 0 8px 32px #6E258520; } }
+        @keyframes shimmer { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
+        @keyframes dotpulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        body { background: #0d1117; }
+        body { background: #0a0e17; }
         ::-webkit-scrollbar { width: 4px; }
         ::-webkit-scrollbar-track { background: transparent; }
-        ::-webkit-scrollbar-thumb { background: #30363d; border-radius: 4px; }
-        input:focus { border-color: #00c8ff !important; }
+        ::-webkit-scrollbar-thumb { background: #1e2535; border-radius: 4px; }
+        input:focus { border-color: #1C69D4 !important; outline: none; }
+        button:hover { opacity: 0.88; }
       `}</style>
 
       <div style={styles.root}>
         <div style={styles.card}>
+
+          {/* BMW M corner stripes */}
+          <MStripes />
+
           {/* Header */}
           <div style={styles.header}>
             <div style={styles.logoRow}>
+              <div style={styles.logoMark}>AB</div>
               <span style={styles.logoText}>AutoBridge</span>
               <span style={styles.badge}>ENET · DoIP</span>
             </div>
@@ -590,13 +680,16 @@ export default function App() {
             </button>
           </div>
 
+          <div style={styles.divider} />
+
           {/* VIN Panel */}
           <div style={styles.vinPanel}>
-            <span style={styles.vinLabel}>Veicolo</span>
+            <div style={styles.vinGlow} />
+            <span style={styles.vinLabel}>Veicolo rilevato</span>
             {isReadingVin && !vin ? (
               <span style={styles.vinShimmer}>Lettura VIN...</span>
             ) : (
-              <span style={styles.vinText}>{vin ?? "——————————————————"}</span>
+              <span style={styles.vinText}>{vin ?? "— — — — — — — — —"}</span>
             )}
             <span style={styles.vinBrand}>BMW</span>
           </div>
@@ -636,8 +729,10 @@ export default function App() {
             style={{
               ...styles.connectBtn,
               background: connectBtnBg,
-              color: "#0d1117",
-              animation: isConnecting && !isConnected ? "pulse 1.2s ease-in-out infinite" : "none",
+              color: connectBtnColor,
+              boxShadow: connectBtnShadow,
+              border: isConnecting ? "1px solid #1e2535" : "none",
+              animation: isConnecting && !isConnected ? "pulse 1.6s ease-in-out infinite" : "none",
             }}
             onClick={handleConnect}
           >
