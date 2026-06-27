@@ -95,20 +95,19 @@ function logLevelColor(level: string): string {
 const styles: Record<string, React.CSSProperties> = {
   root: {
     height: "100vh",
-    // Sfondo: strisce BMW M parallele oblique a ~35° (come wallpaper ufficiale)
-    // repeating-linear-gradient: blu | viola | rosso, tre bande uguali
+    // Sfondo nero puro con le 3 strisce BMW M che attraversano in diagonale (-45°)
+    // Colori esatti: azzurro chiaro #5BB8E4 | blu scuro #1B3F94 | rosso #DC0A1E
+    // Le strisce occupano la parte centrale-destra, nero sul resto (come il wallpaper)
     background: `
-      repeating-linear-gradient(
-        -35deg,
-        #1C69D4 0px,
-        #1C69D4 33.3%,
-        #6E2585 33.3%,
-        #6E2585 66.6%,
-        #C0272D 66.6%,
-        #C0272D 100%
+      linear-gradient(
+        -45deg,
+        #000 27%,
+        #5BB8E4 27%, #5BB8E4 45%,
+        #1B3F94 45%, #1B3F94 56%,
+        #DC0A1E 56%, #DC0A1E 66%,
+        #000 66%
       )
     `,
-    backgroundSize: "520px 520px",
     color: "#e6edf3",
     fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif",
     display: "flex",
@@ -117,11 +116,11 @@ const styles: Record<string, React.CSSProperties> = {
     overflow: "hidden",
     position: "relative" as const,
   },
-  // Overlay scuro sopra le strisce — lascia intravedere i colori M
+  // Overlay leggero solo per uniformare la leggibilità nei pannelli
   bgOverlay: {
     position: "absolute" as const,
     inset: 0,
-    background: "rgba(8, 11, 20, 0.82)",
+    background: "rgba(0, 0, 0, 0.55)",
     zIndex: 0,
   },
   card: {
@@ -149,7 +148,7 @@ const styles: Record<string, React.CSSProperties> = {
     width: "32px",
     height: "32px",
     borderRadius: "8px",
-    background: "linear-gradient(135deg, #1C69D4, #6E2585)",
+    background: "linear-gradient(135deg, #5BB8E4, #1B3F94)",
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
@@ -170,10 +169,10 @@ const styles: Record<string, React.CSSProperties> = {
     fontWeight: 700,
     letterSpacing: "0.8px",
     color: "#1C69D4",
-    border: "1px solid #1C69D433",
+    border: "1px solid #5BB8E433",
     borderRadius: "5px",
     padding: "2px 7px",
-    background: "#1C69D410",
+    background: "#5BB8E410",
     textTransform: "uppercase" as const,
   },
   gearBtn: {
@@ -200,8 +199,8 @@ const styles: Record<string, React.CSSProperties> = {
     flexDirection: "column",
     alignItems: "center",
     gap: "5px",
-    border: "1px solid #1C69D420",
-    boxShadow: "0 0 0 1px #1C69D408 inset",
+    border: "1px solid #5BB8E418",
+    boxShadow: "0 0 0 1px #5BB8E408 inset",
     position: "relative" as const,
     overflow: "hidden",
   },
@@ -212,7 +211,7 @@ const styles: Record<string, React.CSSProperties> = {
     transform: "translateX(-50%)",
     width: "200px",
     height: "100px",
-    background: "radial-gradient(ellipse, #1C69D418 0%, transparent 70%)",
+    background: "radial-gradient(ellipse, #5BB8E418 0%, transparent 70%)",
     pointerEvents: "none",
   },
   vinLabel: {
@@ -228,7 +227,7 @@ const styles: Record<string, React.CSSProperties> = {
     letterSpacing: "3px",
     fontFamily: "'JetBrains Mono', 'Fira Code', 'Courier New', monospace",
     color: "#e6edf3",
-    textShadow: "0 0 20px #1C69D440",
+    textShadow: "0 0 20px #5BB8E440",
   },
   vinShimmer: {
     fontSize: "16px",
@@ -439,7 +438,7 @@ const styles: Record<string, React.CSSProperties> = {
     height: "44px",
     borderRadius: "22px",
     border: "none",
-    background: "linear-gradient(135deg, #1C69D4, #6E2585)",
+    background: "linear-gradient(135deg, #5BB8E4, #1B3F94)",
     color: "#fff",
     fontSize: "14px",
     fontWeight: 700,
@@ -626,14 +625,14 @@ export default function App() {
     ? "#C0272D"
     : isConnecting
     ? "linear-gradient(135deg, #0f1a2e, #1a1030)"
-    : "linear-gradient(135deg, #1C69D4 0%, #6E2585 55%, #C0272D 100%)";
+    : "linear-gradient(135deg, #5BB8E4 0%, #1B3F94 50%, #DC0A1E 100%)";
   const connectBtnColor = isConnecting ? "#566375" : "#fff";
   const connectBtnText = isConnected ? "DISCONNETTI" : isConnecting ? "CONNESSIONE..." : "CONNETTI";
   const connectBtnShadow = isConnected
-    ? "0 8px 24px #C0272D33"
+    ? "0 8px 24px #DC0A1E33"
     : isConnecting
     ? "none"
-    : "0 8px 32px #1C69D440, 0 2px 8px #6E258530";
+    : "0 8px 32px #5BB8E440, 0 2px 8px #1B3F9430";
 
   const visibleLogs = logs.slice(-8);
 
@@ -641,7 +640,7 @@ export default function App() {
     <>
       <style>{`
         @keyframes spin { to { transform: rotate(360deg); } }
-        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 #1C69D444, 0 8px 32px #1C69D420; } 50% { box-shadow: 0 0 0 14px #1C69D400, 0 8px 32px #6E258520; } }
+        @keyframes pulse { 0%,100% { box-shadow: 0 0 0 0 #5BB8E440, 0 8px 32px #5BB8E418; } 50% { box-shadow: 0 0 0 14px #5BB8E400, 0 8px 32px #1B3F9420; } }
         @keyframes shimmer { 0%,100% { opacity: 1; } 50% { opacity: 0.35; } }
         @keyframes dotpulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
         * { box-sizing: border-box; margin: 0; padding: 0; }
